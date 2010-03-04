@@ -1,14 +1,18 @@
 require "test/unit"
-require_relative "../lib/models/bbc_iplayer_feed"
+require_relative "../../lib/models/bbc_iplayer_feed"
 
 class BBCiPlayerFeedTest < Test::Unit::TestCase
-  def test_fetch_brands
+  def setup_good_fetch
     response = Typhoeus::Response.new(:code => 200, :headers => "", :body => File.read(File.expand_path("r4.xml", "test")), :time => 0.3)
-    hydra = Typhoeus::Hydra.new
-    hydra.stub(:get, "http://www.bbc.co.uk/radio/aod/availability/radio4.xml").and_return(response)
+    @hydra = Typhoeus::Hydra.new
+    @hydra.stub(:get, "http://www.bbc.co.uk/radio/aod/availability/radio4.xml").and_return(response)
+  end
+
+  def test_fetch_brands
+    setup_good_fetch
 
     feed = InternetRadio::BBCiPlayer::Feed.new("BBC Radio 4")
-    feed.fetch(hydra)
+    feed.fetch(@hydra)
     assert_nil feed.error
     assert_equal 91, feed.brands.size
   end
@@ -25,12 +29,10 @@ class BBCiPlayerFeedTest < Test::Unit::TestCase
   end
 
   def test_episodes
-    response = Typhoeus::Response.new(:code => 200, :headers => "", :body => File.read(File.expand_path("r4.xml", "test")), :time => 0.3)
-    hydra = Typhoeus::Hydra.new
-    hydra.stub(:get, "http://www.bbc.co.uk/radio/aod/availability/radio4.xml").and_return(response)
+    setup_good_fetch
 
     feed = InternetRadio::BBCiPlayer::Feed.new("BBC Radio 4")
-    feed.fetch(hydra)
+    feed.fetch(@hydra)
     assert_equal 46, feed.episodes(InternetRadio::BBCiPlayer::Brand.new("Shipping Forecast", "b006qfvv")).size
   end
 end

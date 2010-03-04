@@ -5,25 +5,24 @@
 require "spandex/card"
 require "spandex/list"
 require_relative "../models/bbc_iplayer_feed"
-require_relative "bbc_iplayer_episode_view_card"
 
 module InternetRadio
   module BBCiPlayer
-    # Lists all episodes that are available for the specified Brand.
-    class EpisodeListCard < Spandex::ListCard
+    # Displays information about a single Episode.
+    class EpisodeViewCard < Spandex::ListCard
       top_left :back
 
-      jog_wheel_button card: EpisodeViewCard, params: -> { { episode: @list.selected } }
-
       def after_load
-        @list = Spandex::List.new params[:feed].episodes(params[:brand])
+        @episode = params[:episode]
       end
 
       def show
         render %{
-        <title>#{params[:brand]}</title>
+        <title>#{@episode.title}</title>
         <button position="top_left">Back</button>
-        #{@list.to_s}
+        <text wrap="yes" x="10" y="18" width="236">#{@episode.synopsis}</text>
+        <text x="20" y="48" width="216">#{@episode.duration} mins</text>
+        <text halign="right" width="236" y="48">Until: #{@episode.end.strftime("%d %B %H:%M")}</text>
       }
       end
     end

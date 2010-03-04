@@ -19,7 +19,7 @@ module InternetRadio
       when "BBC local radio live"
 #       load_card InternetRadio::BBCLocalRadioLiveCard
       when "BBC iPlayer national stations"
-        load_card InternetRadio::BBCiPlayerCard
+        load_card InternetRadio::BBCiPlayer::MenuCard
       end
     end
 

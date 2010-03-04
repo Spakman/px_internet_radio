@@ -1,6 +1,7 @@
 require "date"
 require "typhoeus"
 require "nokogiri"
+require_relative "bbc_iplayer_episode"
 
 module InternetRadio
   module BBCiPlayer
@@ -40,19 +41,6 @@ module InternetRadio
         else
           false
         end
-      end
-    end
-
-    class Episode
-      attr_reader :name, :id
-
-      def initialize(name, id)
-        @name = name
-        @id = id
-      end
-
-      def to_s
-        @name
       end
     end
 
@@ -117,9 +105,7 @@ module InternetRadio
         pid = nil
         @xml.xpath("//entry/parents/parent[@type='Brand']").each do |brand_node|
           if brand_node.text == brand.name
-            name = brand_node.parent.parent.css("title").text
-            id = brand_node["pid"]
-            episodes << Episode.new(name, id)
+            episodes << Episode.new(brand_node.parent.parent)
           end
         end
         episodes

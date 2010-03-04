@@ -7,27 +7,29 @@ require "spandex/list"
 require_relative "bbc_iplayer_brand_list_card"
 
 module InternetRadio
-  class BBCiPlayerCard < Spandex::ListCard
-    top_left :back
+  module BBCiPlayer
+    class MenuCard < Spandex::ListCard
+      top_left :back
 
-    jog_wheel_button card: BBCiPlayerBrandListCard, params: -> { { station: @list.selected } }
+      jog_wheel_button card: BrandListCard, params: -> { { station: @list.selected } }
 
-    def after_initialize
-      @list = Spandex::List.new [
+      def after_initialize
+        @list = Spandex::List.new [
         "BBC Radio 1",
         "BBC Radio 2",
         "BBC Radio 3",
         "BBC Radio 4"
-      ]
-    end
+        ]
+      end
 
 
-    def show
-      render %{
+      def show
+        render %{
         <title>BBC iPlayer stations</title>
         <button position="top_left">Back</button>
         #{@list.to_s}
       }
+      end
     end
   end
 end
