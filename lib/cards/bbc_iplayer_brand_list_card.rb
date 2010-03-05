@@ -15,7 +15,11 @@ module InternetRadio
     class BrandListCard < Spandex::ListCard
       top_left :back
 
-      jog_wheel_button card: EpisodeListCard, params: -> { { brand: @list.selected, feed: @feed } }
+      jog_wheel_button method: -> do
+        if @list
+          load_card InternetRadio::BBCiPlayer::EpisodeListCard, { brand: @list.selected, feed: @feed }
+        end
+      end
 
       def after_load
         if params[:station] != @station

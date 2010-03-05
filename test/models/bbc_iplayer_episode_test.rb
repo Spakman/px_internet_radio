@@ -1,27 +1,43 @@
 require "test/unit"
 require_relative "../../lib/models/bbc_iplayer_episode"
 
-class BBCiPlayerEpisodeTest < Test::Unit::TestCase
-  def setup
-    xml = Nokogiri::XML.parse File.read(File.expand_path("r4.xml", "test"))
-    node = xml.xpath("//entry").first
+module InternetRadio
+  module BBCiPlayer
+    class EpisodeTest < Test::Unit::TestCase
+      def setup_good_fetch
+        response = Typhoeus::Response.new(:code => 200, :headers => "", :body => File.read(File.expand_path("b00r0tfb.xml", "test")), :time => 0.3)
+        @hydra = Typhoeus::Hydra.new
+        @hydra.stub(:get, "http://www.bbc.co.uk/mediaselector/4/mtis/stream/b00r0tfb").and_return(response)
 
-    @episode = InternetRadio::BBCiPlayer::Episode.new(node)
-  end
+        response = Typhoeus::Response.new(:code => 200, :headers => "", :body => File.read(File.expand_path("iplayer_intl_stream_wma_uk_concrete", "test")), :time => 0.3)
+        @hydra = Typhoeus::Hydra.new
+        @hydra.stub(:get, "http://www.bbc.co.uk/mediaselector/4/asx/b00r0tfb/iplayer_intl_stream_wma_uk_concrete").and_return(response)
+      end
 
-  def test_initialize_sets_attributes_correctly
-    assert_equal "Today in Parliament, 24/02/2010", @episode.title
-    assert_equal "News, views and features on today's stories in Parliament with Robert Orchard.", @episode.synopsis
-    assert_equal 1800, @episode.duration
-    assert_kind_of Time, @episode.start
-    assert_kind_of Time, @episode.end
-  end
+      def setup
+        @episode = Episode.new "p006mlcs", File.read(File.expand_path("r4.xml", "test"))
+      end
 
-  def test_availabilty
-    refute @episode.available?
-  end
+      def test_initialize_sets_attributes_correctly
+        assert_equal "A Good Read, 02/03/2010", @episode.title
+        assert_equal "Sue MacGregor talks to museum curator Ken Arnold and writer Jay Griffiths.", @episode.synopsis
+        assert_equal 1800, @episode.duration
+        assert_kind_of Time, @episode.start
+        assert_kind_of Time, @episode.end
+        assert_equal "http://www.bbc.co.uk/mediaselector/4/mtis/stream/b00r0tfb", @episode.media_selector_url
+      end
 
-  def test_to_s
-    assert_equal @episode.title, @episode.to_s
+      def test_availabilty
+        refute @episode.available?
+      end
+
+      def test_to_s
+        assert_equal @episode.title, @episode.to_s
+      end
+
+      def test_urls
+        assert_equal [ "mms://wm-acl.bbc.co.uk/wms/radio4fmcoyopa/radio_4_fm_-_tuesday_1630.wma", "mms://wm-acl.bbc.co.uk/wms2/radio4fmcoyopa/radio_4_fm_-_tuesday_1630.wma" ], @episode.urls
+      end
+    end
   end
 end

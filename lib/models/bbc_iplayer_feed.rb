@@ -64,6 +64,7 @@ module InternetRadio
         request = Typhoeus::Request.new(@uri)
         request.on_complete do |response|
           if response.code == 200
+            @markup = response.body
             @xml = Nokogiri::XML.parse response.body
           else
             @error = "There was a problem with this feed."
@@ -105,7 +106,7 @@ module InternetRadio
         pid = nil
         @xml.xpath("//entry/parents/parent[@type='Brand']").each do |brand_node|
           if brand_node.text == brand.name
-            episodes << Episode.new(brand_node.parent.parent)
+            episodes << Episode.new(brand_node.parent.parent["pid"], @markup)
           end
         end
         episodes

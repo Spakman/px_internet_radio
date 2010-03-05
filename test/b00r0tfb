@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mediaSelection xmlns="http://bbc.co.uk/2008/mp/mediaselection">
+<media kind="audio" 
+	expires="2010-03-09T17:02:00+00:00"
+	bitrate="128"
+	service="iplayer_intl_stream_real_non_uk_concrete"
+	type="audio/real" 
+	encoding="real"  >
+	<connection 
+		priority="10" 
+		kind="sis" 
+		server="http://www.bbc.co.uk" 
+		identifier="/iplayer/aod/playlists/bf/t0/r0/0b/RadioBridge_intl_1630_bbc_radio_fourfm" 
+		href="http://www.bbc.co.uk/iplayer/aod/playlists/bf/t0/r0/0b/RadioBridge_intl_1630_bbc_radio_fourfm.ram" 
+	/>
+</media>
+
+<media kind="audio" 
+	expires="2010-03-09T17:02:00+00:00"
+	bitrate="128"
+	service="iplayer_intl_stream_wma_uk_concrete"
+	type="audio/wma" 
+	encoding="wma"  >
+	<connection 
+		priority="10" 
+		kind="sis" 
+		server="http://www.bbc.co.uk/mediaselector/4/asx/" 
+		identifier="b00r0tfb/iplayer_intl_stream_wma_uk_concrete" 
+		href="http://www.bbc.co.uk/mediaselector/4/asx/b00r0tfb/iplayer_intl_stream_wma_uk_concrete" 
+	/>
+</media>
+
+<media kind="" 
+	expires="2010-03-09T17:02:00+00:00"
+	bitrate="32"
+	service="iplayer_uk_stream_aac_3gp_concrete"
+	type="audio/mp4" 
+	encoding="aac"  >
+	<connection 
+		priority="10" 
+		kind="sis" 
+		server="http://www.bbc.co.uk/mediaselector/4/sdp/" 
+		identifier="radio4/secure_auth/mobile/b00r0tfb/iplayer_uk_stream_aac_3gp_concrete" 
+		href="http://www.bbc.co.uk/mediaselector/4/sdp/radio4/secure_auth/mobile/b00r0tfb/iplayer_uk_stream_aac_3gp_concrete" 
+	/>
+</media>
+
+<media kind="audio" 
+	expires="2010-03-09T17:02:00+00:00"
+	bitrate="48"
+	service="iplayer_uk_stream_aac_rtmp_lo_concrete"
+	type="audio/mp4" 
+	encoding="aac"  >
+	<connection  
+		kind="mcs" 
+		identifier="RBN2_radio_4_fm_-_tuesday_1630_b00r0tfb_2010_03_02_17_25_32" 
+		href="/RBN2_radio_4_fm_-_tuesday_1630_b00r0tfb_2010_03_02_17_25_32.mp4" 
+	/>
+<connection 
+		priority="9"
+		application="a1414/e3" 
+		kind="limelight" 
+		server="bbcmedia.fcod.llnwd.net" 
+		identifier="mp4:radio4/secure_auth/modem/RBN2_radio_4_fm_-_tuesday_1630_b00r0tfb_2010_03_02_17_25_32" 
+		authString="s=1267749392&amp;e=1267835792&amp;h=4e90c7a624b74c6d95c7dd15e7da5860" 
+	/>
+</media>
+
+<media kind="audio" 
+	expires="2010-03-09T17:02:00+00:00"
+	bitrate="128"
+	service="iplayer_uk_stream_mp3"
+	type="audio/mpeg" 
+	encoding="mp3"  >
+	<connection 
+		priority="10" 
+		kind="akamai" 
+		server="cp48186.edgefcs.net" 
+		identifier="mp3:secure/radio4/RBN2_radio_4_fm_-_tuesday_1630_b00r0tfb_2010_03_02_17_25_13" 
+		authString="dbEbXcUbldZdUbndFcIdHatc4aFa7cEb9bV-blKpRq-c0-d0i_-KprEBqxqLCqHoyG" 
+	/>
+</media>
+
+<media kind="audio" 
+	expires="2010-03-09T17:02:00+00:00"
+	bitrate="128"
+	service="iplayer_uk_stream_aac_rtmp_concrete"
+	type="audio/mp4" 
+	encoding="aac"  >
+	<connection 
+		priority="10"
+		application="a1414/e3" 
+		kind="limelight" 
+		server="bbcmedia.fcod.llnwd.net" 
+		identifier="mp4:radio4/secure_auth/RBN2_radio_4_fm_-_tuesday_1630_b00r0tfb_2010_03_02_17_25_18" 
+		authString="s=1267749392&amp;e=1267835792&amp;h=27c54547509186e8fb02a8daa13a48fb" 
+	/>
+</media>
+
+<media kind="audio" 
+	expires="2010-03-09T17:02:00+00:00"
+	bitrate="128"
+	service="iplayer_intl_stream_real_uk_concrete"
+	type="audio/real" 
+	encoding="real"  >
+	<connection 
+		priority="10" 
+		kind="sis" 
+		server="http://www.bbc.co.uk" 
+		identifier="/iplayer/aod/playlists/bf/t0/r0/0b/RadioBridge_uk_1630_bbc_radio_fourfm" 
+		href="http://www.bbc.co.uk/iplayer/aod/playlists/bf/t0/r0/0b/RadioBridge_uk_1630_bbc_radio_fourfm.ram" 
+	/>
+</media>
+</mediaSelection>
+<!-- This code and data form part of the BBC iPlayer content protection system. Tampering with, removal of, misuse of, or unauthorised use of this code or data constitutes circumvention of the BBC's content protection measures and may result in legal action. BBC (C) 2010.   -->

@@ -12,6 +12,10 @@ module InternetRadio
     class EpisodeViewCard < Spandex::ListCard
       top_left :back
 
+      jog_wheel_button method: -> do
+        pass_focus application: "mozart", method: "play_stream", params: @episode.urls.first
+      end
+
       def after_load
         @episode = params[:episode]
       end
