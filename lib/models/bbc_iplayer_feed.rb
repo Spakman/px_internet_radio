@@ -2,50 +2,12 @@ require "date"
 require "typhoeus"
 require "nokogiri"
 require_relative "bbc_iplayer_episode"
+require_relative "bbc_iplayer_brand"
 
 module InternetRadio
   module BBCiPlayer
-    class Brand
-      attr_reader :name, :id
-
-      def initialize(name, id)
-        @name = name
-        @id = id
-      end
-
-      def hash
-        (@name.hash.to_s + @id.hash.to_s).to_i
-      end
-
-      def to_s
-        @name
-      end
-
-      def <=>(brand)
-        if @name > brand.name
-          1
-        elsif @name == brand
-          0
-        else
-          -1
-        end
-      end
-
-      def eql?(object)
-        if object.class == Brand
-          if @name == object.name and @id = object.id
-            true
-          else
-            false
-          end
-        else
-          false
-        end
-      end
-    end
-
     class Feed
-      attr_reader :brands, :error
+      attr_reader :brands, :error, :xml_document
 
       STATIONS = {}
       STATIONS["BBC Radio 1"] = "radio1.xml"
@@ -60,56 +22,35 @@ module InternetRadio
         @brands = []
       end
 
-      def fetch(hydra)
-        request = Typhoeus::Request.new(@uri)
-        request.on_complete do |response|
-          if response.code == 200
-            @markup = response.body
-            @xml = Nokogiri::XML.parse response.body
-          else
-            @error = "There was a problem with this feed."
-          end
+      def fetch
+        response = Typhoeus::Request.get(@uri)
+        if response.code == 200
+          @xml_document = Nokogiri::XML.parse response.body
+        else
+          @error = "There was a problem with this feed."
         end
-        hydra.queue request
-        hydra.run
       end
 
-      def parse_brands(xml)
+      def brands
+        return [] unless @xml_document
+        @brands = []
         now = Time.now.to_date
-        xml.css('entry').each do |entry|
+        @xml_document.css('entry').each do |entry|
           availability = entry.css("availability")
           if Date.parse(availability.attr("start").content) < now
             unless Date.parse(availability.attr("end").content) < now
               name = entry.xpath("parents/parent[@type='Brand']").text
               unless name.empty?
-                id = entry.xpath("parents/parent[@type='Brand']").attr("pid").content
-                @brands << Brand.new(name, id)
+                pid = entry.xpath("parents/parent[@type='Brand']").attr("pid").content
+                @brands << Brand.new(pid, name, @xml_document)
               end
             end
           end
         end
-        @brands.uniq!.sort!
-      end
-
-      def brands
-        unless @xml.nil?
-          parse_brands @xml
+        unless @brands.empty?
+          @brands.uniq!.sort!
         end
         @brands
-      end
-
-      def episodes(brand)
-        unless @xml
-          return []
-        end
-        episodes = []
-        pid = nil
-        @xml.xpath("//entry/parents/parent[@type='Brand']").each do |brand_node|
-          if brand_node.text == brand.name
-            episodes << Episode.new(brand_node.parent.parent["pid"], @markup)
-          end
-        end
-        episodes
       end
     end
   end

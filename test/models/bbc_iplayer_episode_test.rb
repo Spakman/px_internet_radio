@@ -4,18 +4,13 @@ require_relative "../../lib/models/bbc_iplayer_episode"
 module InternetRadio
   module BBCiPlayer
     class EpisodeTest < Test::Unit::TestCase
-      def setup_good_fetch
+      def setup
         response = Typhoeus::Response.new(:code => 200, :headers => "", :body => File.read(File.expand_path("b00r0tfb.xml", "test")), :time => 0.3)
-        @hydra = Typhoeus::Hydra.new
-        @hydra.stub(:get, "http://www.bbc.co.uk/mediaselector/4/mtis/stream/b00r0tfb").and_return(response)
+        Typhoeus::Hydra.hydra.stub(:get, "http://www.bbc.co.uk/mediaselector/4/mtis/stream/b00r0tfb").and_return(response)
 
         response = Typhoeus::Response.new(:code => 200, :headers => "", :body => File.read(File.expand_path("iplayer_intl_stream_wma_uk_concrete", "test")), :time => 0.3)
-        @hydra = Typhoeus::Hydra.new
-        @hydra.stub(:get, "http://www.bbc.co.uk/mediaselector/4/asx/b00r0tfb/iplayer_intl_stream_wma_uk_concrete").and_return(response)
-      end
-
-      def setup
-        @episode = Episode.new "p006mlcs", File.read(File.expand_path("r4.xml", "test"))
+        Typhoeus::Hydra.hydra.stub(:get, "http://www.bbc.co.uk/mediaselector/4/asx/b00r0tfb/iplayer_intl_stream_wma_uk_concrete").and_return(response)
+        @episode = Episode.new "p006mlcs", Nokogiri::XML.parse(File.read(File.expand_path("r4.xml", "test")))
       end
 
       def test_initialize_sets_attributes_correctly

@@ -16,7 +16,7 @@ module InternetRadio
       jog_wheel_button card: EpisodeViewCard, params: -> { { episode: @list.selected } }
 
       def after_load
-        @list = Spandex::List.new params[:feed].episodes(params[:brand])
+        @list = Spandex::List.new params[:brand].episodes
       end
 
       def show

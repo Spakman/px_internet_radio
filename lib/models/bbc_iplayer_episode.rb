@@ -12,9 +12,8 @@ module InternetRadio
       attr_reader :title, :start, :end, :synopsis, :duration, :media_selector_url
 
       # Takes a node object and parses it to create the Episode attributes.
-      def initialize(pid, markup)
-        xml = Nokogiri::XML.parse markup
-        node = xml.xpath("//schedule/entry[@pid='#{pid}']").first
+      def initialize(pid, xml_document)
+        node = xml_document.xpath("//schedule/entry[@pid='#{pid}']").first
         @title = node.css("title").text
         @start = Time.parse(node.css("availability").attr("start").content)
         @end = Time.parse(node.css("availability").attr("end").content)

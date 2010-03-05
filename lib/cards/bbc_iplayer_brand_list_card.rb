@@ -17,7 +17,7 @@ module InternetRadio
 
       jog_wheel_button method: -> do
         if @list
-          load_card InternetRadio::BBCiPlayer::EpisodeListCard, { brand: @list.selected, feed: @feed }
+          load_card InternetRadio::BBCiPlayer::EpisodeListCard, { brand: @list.selected }
         end
       end
 
@@ -29,7 +29,7 @@ module InternetRadio
           @message = "Fetching programmes..."
           Thread.new do
             @feed = Feed.new params[:station]
-            @feed.fetch @application.hydra
+            @feed.fetch
             if @feed.error
               @message = "There was a problem with this feed"
             elsif @feed.brands.empty?
