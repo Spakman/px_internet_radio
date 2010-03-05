@@ -16,10 +16,10 @@ module InternetRadio
         xml = Nokogiri::XML.parse markup
         node = xml.xpath("//schedule/entry[@pid='#{pid}']").first
         @title = node.css("title").text
-        @start = Time.parse(node.css("availability").attr("start"))
-        @end = Time.parse(node.css("availability").attr("end"))
+        @start = Time.parse(node.css("availability").attr("start").content)
+        @end = Time.parse(node.css("availability").attr("end").content)
         @synopsis = node.css("synopsis").text
-        @duration = node.css("broadcast").attr("duration").to_i
+        @duration = node.css("broadcast").attr("duration").content.to_i
         @media_selector_url = node.xpath("links/link[@type='mediaselector']").first.text
       end
 

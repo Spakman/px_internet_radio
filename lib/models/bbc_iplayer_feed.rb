@@ -78,11 +78,11 @@ module InternetRadio
         now = Time.now.to_date
         xml.css('entry').each do |entry|
           availability = entry.css("availability")
-          if Date.parse(availability.attr("start")) < now
-            unless Date.parse(availability.attr("end")) < now
+          if Date.parse(availability.attr("start").content) < now
+            unless Date.parse(availability.attr("end").content) < now
               name = entry.xpath("parents/parent[@type='Brand']").text
               unless name.empty?
-                id = entry.xpath("parents/parent[@type='Brand']").attr("pid")
+                id = entry.xpath("parents/parent[@type='Brand']").attr("pid").content
                 @brands << Brand.new(name, id)
               end
             end
