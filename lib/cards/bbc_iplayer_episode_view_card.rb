@@ -9,7 +9,9 @@ require_relative "../models/bbc_iplayer_feed"
 module InternetRadio
   module BBCiPlayer
     # Displays information about a single Episode.
-    class EpisodeViewCard < Spandex::ListCard
+    class EpisodeViewCard < Spandex::Card
+      include JogWheelListMethods
+
       top_left :back
 
       jog_wheel_button method: -> do

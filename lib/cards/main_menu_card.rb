@@ -8,7 +8,9 @@ require_relative "bbc_national_radio_live_card"
 require_relative "bbc_iplayer_card"
 
 module InternetRadio
-  class MainMenuCard < Spandex::ListCard
+  class MainMenuCard < Spandex::Card
+    include JogWheelListMethods
+
     top_left :back
     jog_wheel_button method: -> do
       case @list.selected
