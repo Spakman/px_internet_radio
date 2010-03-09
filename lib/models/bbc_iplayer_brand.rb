@@ -20,7 +20,7 @@ module InternetRadio
       def episodes
         episodes = []
         @xml_document.xpath("//entry/parents/parent[@pid='#{@pid}']").each do |brand_node|
-          episode = Episode.new(brand_node.parent.parent["pid"], @xml_document)
+          episode = Episode.new(brand_node.parent.parent.css("pid").text, @xml_document)
           episodes << episode if episode.available?
         end
         episodes.uniq

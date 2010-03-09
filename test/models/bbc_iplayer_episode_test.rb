@@ -10,7 +10,7 @@ module InternetRadio
 
         response = Typhoeus::Response.new(:code => 200, :headers => "", :body => File.read(File.expand_path("iplayer_intl_stream_wma_uk_concrete", "test")), :time => 0.3)
         Typhoeus::Hydra.hydra.stub(:get, "http://www.bbc.co.uk/mediaselector/4/asx/b00r0tfb/iplayer_intl_stream_wma_uk_concrete").and_return(response)
-        @episode = Episode.new "p006mlcs", Nokogiri::XML.parse(File.read(File.expand_path("r4.xml", "test")))
+        @episode = Episode.new "b00r0tvf", Nokogiri::XML.parse(File.read(File.expand_path("r4.xml", "test")))
       end
 
       def test_initialize_sets_attributes_correctly
@@ -35,7 +35,7 @@ module InternetRadio
       end
 
       def test_uniq
-        episode2 = Episode.new "p006mlcs", Nokogiri::XML.parse(File.read(File.expand_path("r4.xml", "test")))
+        episode2 = Episode.new "b00r0tvf", Nokogiri::XML.parse(File.read(File.expand_path("r4.xml", "test")))
         assert_equal 1, [ @episode, episode2 ].uniq.size
       end
     end

@@ -22,16 +22,18 @@ module InternetRadio
       def initialize(pid, xml_document)
         @pid = pid
 
-        xml_document.xpath("//schedule/entry[@pid='#{pid}']").each do |node|
-          @title = node.css("title").text
-          @start = Time.parse(node.css("availability").attr("start").content)
-          @end = Time.parse(node.css("availability").attr("end").content)
-          @synopsis = node.css("synopsis").text
-          @duration = node.css("broadcast").attr("duration").content.to_i
-          @media_selector_url = node.xpath("links/link[@type='mediaselector']").first.text
+        xml_document.xpath("//schedule/entry").each do |entry|
+          if entry.css("pid").text == pid
+            @title = entry.css("title").text
+            @start = Time.parse(entry.css("availability").attr("start").content)
+            @end = Time.parse(entry.css("availability").attr("end").content)
+            @synopsis = entry.css("synopsis").text
+            @duration = entry.css("broadcast").attr("duration").content.to_i
+            @media_selector_url = entry.xpath("links/link[@type='mediaselector']").first.text
 
-          if available?
-            break
+            if available?
+              break
+            end
           end
         end
       end
