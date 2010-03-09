@@ -10,7 +10,9 @@ require_relative "bbc_iplayer_episode_view_card"
 module InternetRadio
   module BBCiPlayer
     # Lists all episodes that are available for the specified Brand.
-    class EpisodeListCard < Spandex::ListCard
+    class EpisodeListCard < Spandex::Card
+      include JogWheelListMethods
+
       top_left :back
 
       jog_wheel_button card: EpisodeViewCard, params: -> { { episode: @list.selected } }

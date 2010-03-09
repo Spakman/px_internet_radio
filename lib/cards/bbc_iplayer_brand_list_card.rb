@@ -12,7 +12,9 @@ Thread.abort_on_exception = true
 module InternetRadio
   module BBCiPlayer
     # Lists the brands that have available episodes for a specified station.
-    class BrandListCard < Spandex::ListCard
+    class BrandListCard < Spandex::Card
+      include JogWheelListMethods
+
       top_left :back
 
       jog_wheel_button method: -> do

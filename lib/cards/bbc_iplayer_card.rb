@@ -8,7 +8,9 @@ require_relative "bbc_iplayer_brand_list_card"
 
 module InternetRadio
   module BBCiPlayer
-    class MenuCard < Spandex::ListCard
+    class MenuCard < Spandex::Card
+      include JogWheelListMethods
+
       top_left :back
 
       jog_wheel_button card: BrandListCard, params: -> { { station: @list.selected } }

@@ -12,14 +12,6 @@ class InternetRadio::Application < Spandex::Application
 
   entry_point InternetRadio::MainMenuCard
   can_run_in_background
-
-  def initialize
-    super
-
-    response = Typhoeus::Response.new(:code => 200, :headers => "", :body => File.read(File.expand_path("r4.xml", "../internet_radio/test")), :time => 0.5)
-    @hydra = Typhoeus::Hydra.new
-    @hydra.stub(:get, "http://www.bbc.co.uk/radio/aod/availability/radio4.xml").and_return(response)
-  end
 end
 
 InternetRadio::Application.new.run
