@@ -34,7 +34,6 @@ module InternetRadio
       def initialize(station)
         @station = station
         @uri = "http://www.bbc.co.uk/radio/aod/availability/#{STATIONS[station]}"
-        @brands = []
       end
 
       def fetch
@@ -48,7 +47,7 @@ module InternetRadio
 
       def brands
         return [] unless @xml_document
-        @brands = []
+        brands = []
         now = Time.now.to_date
         @xml_document.css('entry').each do |entry|
           availability = entry.css("availability")
@@ -57,15 +56,15 @@ module InternetRadio
               name = entry.xpath("parents/parent[@type='Brand']").text
               unless name.empty?
                 pid = entry.xpath("parents/parent[@type='Brand']").attr("pid").content
-                @brands << Brand.new(pid, name, @xml_document)
+                brands << Brand.new(pid, name, @xml_document)
               end
             end
           end
         end
-        unless @brands.empty?
-          @brands.uniq!.sort!
+        unless brands.empty?
+          brands.uniq!.sort!
         end
-        @brands
+        brands
       end
     end
   end

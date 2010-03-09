@@ -15,7 +15,7 @@ module InternetRadio
         feed = Feed.new("BBC Radio 4")
         feed.fetch
         assert_nil feed.error
-        assert_equal 91, feed.brands.size
+        assert_equal 19, feed.brands.size
       end
 
       def test_fetch_error
@@ -27,7 +27,6 @@ module InternetRadio
         assert_not_nil feed.error
         assert_empty feed.brands
       end
-
     end
   end
 end

@@ -23,7 +23,7 @@ module InternetRadio
       end
 
       def test_availabilty
-        refute @episode.available?
+        assert @episode.available?
       end
 
       def test_to_s
@@ -32,6 +32,11 @@ module InternetRadio
 
       def test_urls
         assert_equal [ "mms://wm-acl.bbc.co.uk/wms/radio4fmcoyopa/radio_4_fm_-_tuesday_1630.wma", "mms://wm-acl.bbc.co.uk/wms2/radio4fmcoyopa/radio_4_fm_-_tuesday_1630.wma" ], @episode.urls
+      end
+
+      def test_uniq
+        episode2 = Episode.new "p006mlcs", Nokogiri::XML.parse(File.read(File.expand_path("r4.xml", "test")))
+        assert_equal 1, [ @episode, episode2 ].uniq.size
       end
     end
   end

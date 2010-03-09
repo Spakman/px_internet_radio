@@ -9,6 +9,7 @@ module InternetRadio
 
       alias_method :to_s, :name
 
+      # This takes a name parameter simply for optimisation.
       def initialize(pid, name, xml_document)
         feed = feed
         @pid = pid
@@ -19,9 +20,10 @@ module InternetRadio
       def episodes
         episodes = []
         @xml_document.xpath("//entry/parents/parent[@pid='#{@pid}']").each do |brand_node|
-          episodes << Episode.new(brand_node.parent.parent["pid"], @xml_document)
+          episode = Episode.new(brand_node.parent.parent["pid"], @xml_document)
+          episodes << episode if episode.available?
         end
-        episodes
+        episodes.uniq
       end
 
       def hash
@@ -39,7 +41,7 @@ module InternetRadio
       end
 
       def eql?(object)
-        if object.class == Brand
+        if object.class == self.class
           if @name == object.name and @pid = object.pid
             true
           else

@@ -22,7 +22,17 @@ module InternetRadio
 
       def test_episodes
         brand = Brand.new("b006qfvv", "Shipping Forecast", @xml)
-        assert_equal 46, brand.episodes.size
+        assert_equal 2, brand.episodes.size
+      end
+
+      def test_episodes_dont_include_duplicates
+        brand = Brand.new("b006v8jn", "A Good Read", @xml)
+        assert_equal 1, brand.episodes.size
+      end
+
+      def test_episodes_not_available
+        brand = Brand.new("b006qtqd", "Today in Parliament", @xml)
+        assert_empty brand.episodes
       end
     end
   end

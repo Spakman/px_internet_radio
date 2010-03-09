@@ -9,17 +9,31 @@ require "typhoeus"
 module InternetRadio
   module BBCiPlayer
     class Episode
-      attr_reader :title, :start, :end, :synopsis, :duration, :media_selector_url
+      attr_reader :pid, :title, :start, :end, :synopsis, :duration, :media_selector_url
 
-      # Takes a node object and parses it to create the Episode attributes.
+      # Takes a node object and parses it to create the Episode
+      # attributes.
+      #
+      # Confusingly, there can be more than one <entry> with a
+      # certain PID (this could be when a programme is broadcast
+      # on LW and FM, for example). We try to find one that is
+      # available. This certainly isn't perfect, but should
+      # suffice for now.
       def initialize(pid, xml_document)
-        node = xml_document.xpath("//schedule/entry[@pid='#{pid}']").first
-        @title = node.css("title").text
-        @start = Time.parse(node.css("availability").attr("start").content)
-        @end = Time.parse(node.css("availability").attr("end").content)
-        @synopsis = node.css("synopsis").text
-        @duration = node.css("broadcast").attr("duration").content.to_i
-        @media_selector_url = node.xpath("links/link[@type='mediaselector']").first.text
+        @pid = pid
+
+        xml_document.xpath("//schedule/entry[@pid='#{pid}']").each do |node|
+          @title = node.css("title").text
+          @start = Time.parse(node.css("availability").attr("start").content)
+          @end = Time.parse(node.css("availability").attr("end").content)
+          @synopsis = node.css("synopsis").text
+          @duration = node.css("broadcast").attr("duration").content.to_i
+          @media_selector_url = node.xpath("links/link[@type='mediaselector']").first.text
+
+          if available?
+            break
+          end
+        end
       end
 
       def to_s
@@ -45,6 +59,18 @@ module InternetRadio
           urls = asx_xml.css("Entry ref").map { |ref| ref["href"] }
         end
         urls
+      end
+
+      def hash
+        @pid.to_i
+      end
+
+      def eql?(object)
+        if object.class == self.class and @pid == object.pid
+          true
+        else
+          false
+        end
       end
     end
   end
