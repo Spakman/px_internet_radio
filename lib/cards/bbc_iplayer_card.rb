@@ -16,14 +16,8 @@ module InternetRadio
       jog_wheel_button card: BrandListCard, params: -> { { station: @list.selected } }
 
       def after_initialize
-        @list = Spandex::List.new [
-        "BBC Radio 1",
-        "BBC Radio 2",
-        "BBC Radio 3",
-        "BBC Radio 4"
-        ]
+        @list = Spandex::List.new Feed::STATIONS.keys
       end
-
 
       def show
         render %{

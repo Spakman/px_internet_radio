@@ -34,6 +34,7 @@ module InternetRadio
 
     def show
       render %{
+        <title>BBC streaming radio</title>
         <button position="top_left">Back</button>
         #{@list.to_s}
       }
