@@ -4,13 +4,16 @@
 
 require "spandex/card"
 require "spandex/list"
+require_relative "../models/asx_parser"
 
 module InternetRadio
-  class BBCNationalRadioLiveCard < Spandex::ListCard
+  class BBCNationalRadioLiveCard < Spandex::Card
+    include JogWheelListMethods
+
     top_left :back
 
     jog_wheel_button method: -> do
-      pass_focus application: "mozart", method: "play_stream", params: @apps[@list.selected]
+      pass_focus application: "mozart", method: "play_streams", params: InternetRadio::ASXParser.uris_from(@apps[@list.selected]).join(", ")
     end
 
     def after_initialize

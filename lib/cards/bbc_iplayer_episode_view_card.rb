@@ -15,7 +15,7 @@ module InternetRadio
       top_left :back
 
       jog_wheel_button method: -> do
-        pass_focus application: "mozart", method: "play_stream", params: @episode.urls.first
+        pass_focus application: "mozart", method: "play_streams", params: @episode.urls.join(", ")
       end
 
       def after_load
