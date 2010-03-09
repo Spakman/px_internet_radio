@@ -13,8 +13,19 @@ module InternetRadio
       STATIONS["BBC Radio 1"] = "radio1.xml"
       STATIONS["BBC 1Xtra"] = "1xtra.xml"
       STATIONS["BBC Radio 2"] = "radio2.xml"
+      STATIONS["BBC 6Music"] = "3music.xml"
       STATIONS["BBC Radio 3"] = "radio3.xml"
       STATIONS["BBC Radio 4"] = "radio4.xml"
+      STATIONS["BBC Radio 7"] = "bbc7.xml"
+      STATIONS["BBC 5live"] = "fivelive.xml"
+      STATIONS["BBC 5live Sports Extra"] = "sportsextra.xml"
+
+      STATIONS["BBC Radio nan Gaidheal"] = "alba.xml"
+      STATIONS["BBC Radio Scotland"] = "radioscotland.xml"
+      STATIONS["BBC Radio Ulster"] = "radioulster.xml"
+      STATIONS["BBC Radio Foyle"] = "radiofoyle.xml"
+      STATIONS["BBC Radio Wales"] = "radiowales.xml"
+      STATIONS["BBC Radio Cymru"] = "radiocymru.xml"
 
       def initialize(station)
         @station = station
