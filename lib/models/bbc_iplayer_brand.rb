@@ -1,3 +1,7 @@
+# Copyright (C) 2010 Mark Somerville <mark@scottishclimbs.com>
+# Released under the General Public License (GPL) version 3.
+# See COPYING
+
 module InternetRadio
   module BBCiPlayer
     class Brand
